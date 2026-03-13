@@ -11,12 +11,13 @@ import io
 import os
 import sys
 import time
+import uuid
 import requests
 import re
 
 EMAIL = os.environ.get("EVRIT_EMAIL", "")
 PASSWORD = os.environ.get("EVRIT_PASSWORD", "")
-DEVICE_SERIAL = os.environ.get("EVRIT_DEVICE_SERIAL", "REMOVED")
+DEVICE_SERIAL = os.environ.get("EVRIT_DEVICE_SERIAL", uuid.uuid4().hex)
 API_BASE = "https://api.e-vrit.co.il/api"
 OUTPUT_DIR = os.environ.get("EVRIT_OUTPUT_DIR", os.path.join(os.path.dirname(__file__), "books"))
 
