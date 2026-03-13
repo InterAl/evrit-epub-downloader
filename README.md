@@ -30,7 +30,7 @@ Books are saved to the `books/` folder next to the script.
 | `EVRIT_EMAIL` | *(required)* | Your e-vrit account email |
 | `EVRIT_PASSWORD` | *(required)* | Your e-vrit account password |
 | `EVRIT_OUTPUT_DIR` | `./books` | Where to save the EPUB files |
-| `EVRIT_DEVICE_SERIAL` | auto-generated | Device fingerprint for API auth |
+| `EVRIT_DEVICE_SERIAL` | random | The e-vrit API uses device-based auth. Each "device" is identified by a serial string, which gets registered to your account on login. A random one is generated each run, so you don't need to set this unless you want a stable device identity across runs. |
 
 ### Re-running
 
