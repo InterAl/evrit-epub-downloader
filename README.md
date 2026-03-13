@@ -1,6 +1,8 @@
 # evrit-epub-downloader
 
-Downloads all your purchased books from [e-vrit.co.il](https://www.e-vrit.co.il) as decrypted EPUBs (not just the free ones).
+Downloads all your purchased books from [e-vrit.co.il](https://www.e-vrit.co.il) as decrypted EPUBs.
+
+This tool was created for educational purposes only. Do not use it to pirate books.
 
 ## Prerequisites
 
