@@ -1,13 +1,11 @@
-# E-vrit Book Extractor
+# evrit-epub-downloader
 
-Downloads your entire [e-vrit.co.il](https://www.e-vrit.co.il) library as decrypted EPUB files — not just the free books, but every book on your account.
+Downloads all your purchased books from [e-vrit.co.il](https://www.e-vrit.co.il) as decrypted EPUBs (not just the free ones).
 
 ## Prerequisites
 
 - Python 3.8+
 - `requests` and `pycryptodome` packages
-
-Install dependencies:
 
 ```bash
 pip install requests pycryptodome
@@ -23,7 +21,7 @@ EVRIT_EMAIL="your@email.com" EVRIT_PASSWORD="yourpassword" python3 extract.py
 
 Books are saved to the `books/` folder next to the script.
 
-### Optional environment variables
+### Environment variables
 
 | Variable | Default | Description |
 |---|---|---|
@@ -38,7 +36,7 @@ The script skips books that already exist in the output folder (matched by filen
 
 ## How it works
 
-1. **Login** — authenticates with the e-vrit API using your credentials and obtains a JWT token. Without this token, the API only returns free books.
-2. **Fetch library** — calls `GetPurchasedBooks` to list every book on your account.
-3. **Download** — for each book, requests the encrypted EPUB data via `BookDownloadRequest` + `GetBook`.
-4. **Decrypt** — each EPUB's XHTML content is AES-256-CBC encrypted. The script derives the decryption key from the book's token, the device serial, and an application constant, then decrypts and writes a standard EPUB.
+1. **Login** - authenticates with the e-vrit API and gets a JWT token. Without this token the API only returns free books.
+2. **Fetch library** - calls `GetPurchasedBooks` to get the full book list.
+3. **Download** - for each book, calls `BookDownloadRequest` then `GetBook` to get the encrypted EPUB data.
+4. **Decrypt** - the XHTML content inside each EPUB is AES-256-CBC encrypted. The key is derived from the book's token, the device serial, and a constant baked into the app. The script decrypts the content and writes a normal EPUB.
