@@ -1,0 +1,8 @@
+books/
+*.png
+*.bin
+*.epub
+*.html
+*.js
+__pycache__/
+*.pyc
