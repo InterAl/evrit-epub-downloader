@@ -4,7 +4,7 @@ Notes on how the e-vrit web reader's encryption and API auth were figured out.
 
 ## The obfuscated bundle
 
-The reader at `read.e-vrit.co.il` is a React SPA. Its main bundle (`main.chunk.js`, ~15,000 lines) has all meaningful strings and property names obfuscated.
+The reader at `read.e-vrit.co.il` is a React [SPA](https://en.wikipedia.org/wiki/Single-page_application). Its main bundle (`main.chunk.js`, ~15,000 lines) has all meaningful strings and property names obfuscated.
 
 Strings are stored in a big array called `a7_0x1947` (~1350 entries). At startup, the array is rotated 107 times. A lookup function `a7_0x3698(x)` resolves indices to strings via `a7_0x1947[x - 0xf5]`. So instead of `obj["Token"]`, the code reads `obj[a7_0x3698(0x2f1)]`.
 
@@ -12,7 +12,7 @@ I wrote a Node.js script (`decode_strings.js`) that replays the array rotation a
 
 ## API authentication
 
-Auth is device-based. Each client generates a `DeviceSerialNum` (a fingerprint hash) and registers it with the user's account via `/user/LoginUser`. The login returns JWT tokens (`AccessToken` and `RefreshToken`).
+Auth is device-based. Each client generates a `DeviceSerialNum` (a fingerprint hash) and registers it with the user's account via `/user/LoginUser`. The login returns [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) tokens (`AccessToken` and `RefreshToken`).
 
 Without passing the JWT `AccessToken` as an `Authorization` header, the `GetPurchasedBooks` endpoint only returns free books. With the token, it returns the full library.
 
@@ -23,7 +23,7 @@ Credentials go inside a `login` object in the request body (not top-level fields
 Downloading a book is a two-step API process:
 
 1. `BookDownloadRequest` with a `ProductID` returns a `ContentId` and `GUID`.
-2. `GetBook` with the `ContentId` and `GUID` returns a `Token` and the base64-encoded encrypted EPUB.
+2. `GetBook` with the `ContentId` and `GUID` returns a `Token` and the [base64](https://en.wikipedia.org/wiki/Base64)-encoded encrypted EPUB.
 
 The ownership check happens at step 2 - step 1 succeeds for any ProductID.
 
@@ -31,9 +31,9 @@ The ownership check happens at step 2 - step 1 succeeds for any ProductID.
 
 Each EPUB is a zip file where the XHTML/HTML chapter files are individually encrypted. Other files (CSS, images, metadata) are not encrypted.
 
-The encryption is AES-256-CBC with PKCS7 padding.
+The encryption is [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)-256-[CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC) with [PKCS7](https://en.wikipedia.org/wiki/PKCS_7) padding.
 
-### IV
+### IV ([Initialization Vector](https://en.wikipedia.org/wiki/Initialization_vector))
 
 The IV is hardcoded in the decryption function (around line 12522 in the bundle) as an array literal:
 
@@ -49,7 +49,7 @@ The key derivation function (around line 14934) concatenates three values:
 2. `DeviceSerialNum.toUpperCase()`
 3. A constant suffix string
 
-The suffix is split across three webpack modules in the obfuscated code:
+The suffix is split across three [webpack](https://en.wikipedia.org/wiki/Webpack) modules in the obfuscated code:
 
 - Module 0x1f, property `f.one`: `"aJQecSAfdIArerEoQkV"`
 - Module 0x1f, property `g.two`: `"kDC8UNJADN8RiC8ACCn"`
@@ -57,7 +57,7 @@ The suffix is split across three webpack modules in the obfuscated code:
 
 Concatenated: `aJQecSAfdIArerEoQkVkDC8UNJADN8RiC8ACCn8RoSMdYjEx+SmHknsFST`
 
-The full concatenated string is hashed with SHA256, producing a 64-character hex string. Only the first 32 characters are used.
+The full concatenated string is hashed with [SHA-256](https://en.wikipedia.org/wiki/SHA-2), producing a 64-character hex string. Only the first 32 characters are used.
 
 ### Key encoding (the tricky part)
 
