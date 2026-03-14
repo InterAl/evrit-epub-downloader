@@ -2,7 +2,7 @@
 
 Downloads all your purchased books from [e-vrit.co.il](https://www.e-vrit.co.il) as decrypted EPUBs.
 
-This tool was created for educational purposes only. Check out [REVERSE-ENGINEERING.md](REVERSE-ENGINEERING.md) to understand how e-vrit tries to obfuscate and encrypt their books. Do not use it to pirate books.
+This tool was created for educational purposes only. Check out [REVERSE-ENGINEERING.md](REVERSE-ENGINEERING.md) to learn how e-vrit tries to obfuscate and encrypt their books. Do not use it to pirate books.
 
 ## Prerequisites
 
