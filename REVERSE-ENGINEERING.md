@@ -8,7 +8,7 @@ The reader at `read.e-vrit.co.il` is a React [SPA](https://en.wikipedia.org/wiki
 
 Strings are stored in a big array called `a7_0x1947` (~1350 entries). At startup, the array is rotated 107 times. A lookup function `a7_0x3698(x)` resolves indices to strings via `a7_0x1947[x - 0xf5]`. So instead of `obj["Token"]`, the code reads `obj[a7_0x3698(0x2f1)]`.
 
-I wrote a Node.js script (`decode_strings.js`) that replays the array rotation and lookup function so you can resolve what each obfuscated reference actually points to.
+I wrote a Node.js script (`decode_strings.js`) that replays the array rotation and lookup function so I can resolve what each obfuscated reference actually points to.
 
 ## API authentication
 
@@ -29,7 +29,7 @@ The ownership check happens at step 2 - step 1 succeeds for any ProductID.
 
 ## Encryption
 
-Each EPUB is a zip file where the XHTML/HTML chapter files are individually encrypted. Other files (CSS, images, metadata) are not encrypted.
+Each EPUB is a zip file where the XHTML chapter files are individually encrypted. Other files (CSS, images, metadata) are not encrypted.
 
 The encryption is [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)-256-[CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#CBC) with [PKCS7](https://en.wikipedia.org/wiki/PKCS_7) padding.
 
